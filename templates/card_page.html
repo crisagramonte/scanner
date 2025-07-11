@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+<!-- Contenido de la Carta de Pokémon -->
+<section class="container mx-auto px-4">
+    <div class="bg-gray-800 rounded-lg shadow-md p-4">
+        <div class="flex flex-row  ">
+            <img src="{{ pokemon.images.large }}" alt="{{ pokemon.name }}" class="mt-4 min-w-72 rounded-lg w-1/3">
+            <div class="w-2/3 px-20 py-10 flex flex-col items-start ">
+                <h2 class="text-2xl font-semibold text-gray-200">{{ pokemon.name }}</h2>
+                {% if pokemon.get('types') %}
+                <p class="text-gray-300 mt-4">Tipo: {{ pokemon['types'][0] }}</p>
+                {% endif %}
+                {% if pokemon.get('hp') %}
+                <p class="text-gray-300 mt-4">HP: {{ pokemon.hp }}</p>
+                {% endif %}
+                <p class="text-gray-300 mt-4">Precio: {{ pokemon.cardmarket.prices.averageSellPrice }}€</p>
+                <a class="text-gray-400 hover:underline" href="{{ pokemon.cardmarket.url }}" target="_blank">Última
+                    actualización del
+                    precio:
+                    {{ pokemon.cardmarket.updatedAt }}</a>
+                <a class="flex flex-row items-start justify-center my-4 gap-8 hover:underline"
+                    href="/cards?q=set.id:{{pokemon.set.id}}">
+                    <p class="text-gray-300 mt-4">Colección: {{ pokemon.set.name }}</p>
+                    <img class="max-h-12" src="{{ pokemon.set.images.logo }}"
+                        alt="{{ pokemon.set.name }} Pokémon card set">
+                </a>
+                <button class="mt-6 bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700">Añadir al mazo</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}

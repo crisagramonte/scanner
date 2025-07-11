@@ -1,0 +1,64 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<div class="max-w-6xl mx-auto p-6">
+    <!-- Primary Match -->
+    <div class="mb-8">
+        <h2 class="text-2xl font-bold mb-4 text-white">Best Match</h2>
+        <div class="bg-gray-800 rounded-lg p-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="flex justify-center">
+                    <img src="{{ primary_card.images.small }}" alt="{{ primary_card.name }}" 
+                         class="max-w-full h-auto rounded-lg shadow-lg">
+                </div>
+                <div class="text-white">
+                    <h3 class="text-xl font-semibold mb-2">{{ primary_card.name }}</h3>
+                    <p class="text-gray-300 mb-2"><strong>Set:</strong> {{ primary_card.set.name }}</p>
+                    <p class="text-gray-300 mb-2"><strong>Number:</strong> {{ primary_card.number }}/{{ primary_card.set.printedTotal }}</p>
+                    {% if primary_card.cardmarket %}
+                        <p class="text-gray-300 mb-2"><strong>Average Price:</strong> ${{ primary_card.cardmarket.prices.averageSellPrice }}</p>
+                        <p class="text-gray-300 mb-2"><strong>Last Updated:</strong> {{ primary_card.cardmarket.updatedAt }}</p>
+                    {% endif %}
+                    <p class="text-green-400 font-semibold">✓ Primary Match</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Alternative Matches -->
+    <div>
+        <h2 class="text-xl font-bold mb-4 text-white">Alternative Matches</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {% for card in all_matches[1:] %}
+            <div class="bg-gray-800 rounded-lg p-4 hover:bg-gray-700 transition-colors cursor-pointer"
+                 onclick="window.location.href='/card/{{ card.id }}'">
+                <div class="flex flex-col items-center">
+                    <img src="{{ card.images.small }}" alt="{{ card.name }}" 
+                         class="w-full h-auto rounded-lg mb-3">
+                    <div class="text-center text-white">
+                        <h4 class="font-semibold text-sm">{{ card.name }}</h4>
+                        <p class="text-gray-300 text-xs">{{ card.set.name }}</p>
+                        <p class="text-gray-300 text-xs">#{{ card.number }}</p>
+                        {% if card.cardmarket %}
+                            <p class="text-yellow-400 text-xs">${{ card.cardmarket.prices.averageSellPrice }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Tips for Better Accuracy -->
+    <div class="mt-8 bg-blue-900 rounded-lg p-4">
+        <h3 class="text-lg font-semibold mb-2 text-white">Tips for Better Accuracy:</h3>
+        <ul class="text-blue-100 text-sm space-y-1">
+            <li>• Ensure good lighting when taking photos</li>
+            <li>• Position the card to fill most of the frame</li>
+            <li>• Avoid shadows and reflections</li>
+            <li>• Try different hash algorithms (Perceptual, Difference, Wavelet)</li>
+            <li>• Make sure the card is clearly visible and not blurry</li>
+        </ul>
+    </div>
+</div>
+{% endblock %} 

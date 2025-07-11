@@ -1,0 +1,76 @@
+{% extends "layout.html" %} {% block body %}
+<div class="grid grid-cols-1 lg:grid-cols-2">
+    <!-- Left Column -->
+    <div class="p-8 flex flex-col items-center justify-center bg-gray-900">
+        <h1 class="text-2xl font-semibold mb-4 text-white">
+            Pokemon Card Detector
+        </h1>
+
+        <!-- Camera Stream -->
+        <div class="relative w-full pb-9/16 mb-4">
+            <img class="w-full h-full object-cover" id="video-stream" src="{{ url_for('video_feed') }}"
+                alt="Video Stream" />
+        </div>
+
+        <!-- Camera Detection Buttons -->
+        <div class="mb-6">
+            <h3 class="text-lg font-medium mb-2 text-white">Camera Detection:</h3>
+            <div class="space-x-4">
+                <button hx-get="/perceptual_hash" hx-target="#detection" hx-swap="outerHTML"
+                    class="px-4 py-2 bg-yellow-400 text-gray-900 rounded-md hover:scale-110 active:bg-yellow-600">
+                    Perceptual hash
+                </button>
+                <button hx-get="/difference_hash" hx-swap="outerHTML" hx-target="#detection"
+                    class="px-4 py-2 bg-yellow-400 text-gray-900 rounded-md hover:scale-110 active:bg-yellow-600">
+                    Difference hash
+                </button>
+                <button hx-get="/wavelet_hash" hx-swap="outerHTML" hx-target="#detection"
+                    class="px-4 py-2 bg-yellow-400 text-gray-900 rounded-md hover:scale-110 active:bg-yellow-600">
+                    Wavelet hash
+                </button>
+            </div>
+        </div>
+
+        <!-- Image Upload Section -->
+        <div class="w-full">
+            <h3 class="text-lg font-medium mb-2 text-white">Upload Image:</h3>
+            <form hx-post="/upload_image" hx-target="#detection" hx-swap="outerHTML" enctype="multipart/form-data" class="space-y-4">
+                <div class="flex flex-col space-y-2">
+                    <input type="file" name="file" accept="image/*" required
+                        class="block w-full text-sm text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-yellow-400 file:text-gray-900 hover:file:bg-yellow-300">
+                    
+                    <div class="flex space-x-4">
+                        <label class="flex items-center text-white">
+                            <input type="radio" name="hash_type" value="perceptual" checked class="mr-2">
+                            Perceptual
+                        </label>
+                        <label class="flex items-center text-white">
+                            <input type="radio" name="hash_type" value="difference" class="mr-2">
+                            Difference
+                        </label>
+                        <label class="flex items-center text-white">
+                            <input type="radio" name="hash_type" value="wavelet" class="mr-2">
+                            Wavelet
+                        </label>
+                    </div>
+                    
+                    <button type="submit" 
+                        class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 active:bg-blue-700">
+                        Detect Card
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Right Column -->
+    <div class="max-h-full max-w-full p-8 flex flex-col items-center justify-center text-white bg-gray-900">
+        <div id="detection" class="w-full">
+            <div class="text-center text-gray-400">
+                <p class="text-lg mb-2">Card Detection Results</p>
+                <p class="text-sm">Use camera detection or upload an image to identify Pokemon cards</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "layout.html" %} {% block body %}
+<section class="bg-gray-900 text-white flex flex-col justify-center items-center py-24">
+    <div class="mx-auto max-w-screen-xl px-4 py-8">
+        <div class="mx-auto max-w-3xl text-center">
+            <h1
+                class="text-3xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-teal-400 to-teal-900 text-balance">
+                Guarda y Explora tus Cartas Pokémon
+            </h1>
+
+            <p class="mx-auto mt-4 max-w-xl sm:text-xl/relaxed">
+                ¡Bienvenido a tu plataforma para gestionar y descubrir cartas Pokémon!
+                Aquí podrás llevar un registro de tu colección virtual de cartas y
+                explorar nuevas adiciones a tu colección.
+            </p>
+
+            <div class="mt-8 flex flex-wrap justify-center gap-4">
+                <a class="block w-full rounded-full border border-blue-500 bg-blue-500 px-6 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-blue-500 focus:outline-none focus:ring active:text-opacity-75 sm:w-auto"
+                    href="{{ url_for('detect_card') }}">
+                    Escanea tus cartas
+                </a>
+
+                <a class="block w-full rounded-full border border-blue-500 px-6 py-3 text-sm font-medium text-blue-500 hover:bg-blue-100 focus:outline-none focus:ring active:bg-blue-100 sm:w-auto"
+                    href="/search">
+                    Empieza a buscar
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock body %}
