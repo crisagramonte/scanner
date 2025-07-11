@@ -345,4 +345,7 @@ if __name__ == '__main__':
     print("   - GET  /api/health - Health check")
     print("   - GET  /api/hash-types - Available hash types")
     
-    app.run(host='0.0.0.0', port=5000, debug=True) 
+    # Get port from environment variable (for Render deployment)
+    port = int(os.environ.get('PORT', 5000))
+    
+    app.run(host='0.0.0.0', port=port, debug=False) 
